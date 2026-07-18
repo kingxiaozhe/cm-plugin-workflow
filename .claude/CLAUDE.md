@@ -25,7 +25,7 @@ spec-driven 的 Claude Code 自动化开发工作流分发包，**专用于 Chro
 
 ```text
 commands/                     # 斜杠命令 → ~/.claude/commands/
-├── cm-plugin:{scout,init,prd,ai,fix,refactor,idea,check}.md   # scout=选品（流程最上游，评论槽点/停更/功能盘点）
+├── cm-plugin:{rewrite,scout,init,prd,ai,fix,refactor,idea,check}.md   # rewrite=重写直通流水线（主入口）,scout=选品评估
 ├── cm-plugin-ai-nodes/       # cm-plugin:ai 的 N1–N8 节点，按需加载
 └── cm-plugin-prd-modes/      # cm-plugin:prd 的 greenfield/brownfield/change-mode
 skills/                       # 工种能力 → ~/.claude/skills/{name}/SKILL.md —— skill 管技术

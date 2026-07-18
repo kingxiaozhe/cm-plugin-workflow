@@ -1,6 +1,6 @@
 # /cm-plugin:scout — 竞品插件重写机会评估
 
-`$ARGUMENTS` — Chrome Web Store 插件链接（或插件名，先搜到链接再执行）。
+`$ARGUMENTS` — Chrome Web Store 插件链接（或插件名，先搜到链接再执行）；可选 `--rewrite`（素材模式：由 /cm-plugin:rewrite 流水线调用或用户已决定重写时使用——三维流程、日志、裁量全部照常，但 verdict 仅作参考不设门，一票否决级事实仍须举旗知情；台账结论标注 `重写直通`）。
 
 流程最上游的选品环节：判断一个现存插件**值不值得重写**。产出机会评分卡 + 槽点→需求映射表；结论为 GO 时衔接 `/cm-plugin:idea`（需访谈补全）或直接 `/cm-plugin:prd`。
 
