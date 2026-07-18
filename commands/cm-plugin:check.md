@@ -8,13 +8,13 @@
 
 - `~/.claude/commands/cm-plugin-ai-nodes/N3-execute-task.md` 匹配表中引用的每个 `cm-plugin-*-engineer` / `cm-plugin-*-manager` → `~/.claude/skills/{名称}/SKILL.md` 必须存在
 - `N2-enter-feature.md` 预定义角色列表中的每个 `cm-plugin-*-agent` → `~/.claude/agents/{名称}.md` 必须存在
-- 反向检查：skills/ 与 agents/ 下存在、但 `~/.claude/commands/` 下**任何文件**（命令 + cm-plugin-ai-nodes/ 节点 + cm-plugin-prd-modes/ 模式文件）均未引用的角色 → 报告为"孤儿角色"（建了没接线）。范围不得收窄到 N2/N3——把关型 skill（cm-plugin-doc-syncer/cm-plugin-product-manager/cm-plugin-qa-engineer/cm-plugin-devops-engineer）按设计接在 cm-plugin:ai/N6/N8/cm-plugin:prd/模式文件上，只查派发路径会把它们误报成孤儿（v0.9.24 实跑教训：init 自举时靠人工甄别才排除三处假阳性）。**检查范围限定 `cm-` 前缀**——非 cm- 前缀的 skill（如 codebase-context）是独立工具，不参与角色配对检查，但其被 cm-plugin:init/cm-plugin:prd/N8 的引用仍走第 3 组命令引用检查
+- 反向检查：skills/ 与 agents/ 下存在、但 `~/.claude/commands/` 下**任何文件**（命令 + cm-plugin-ai-nodes/ 节点 + cm-plugin-prd-modes/ 模式文件）均未引用的角色 → 报告为"孤儿角色"（建了没接线）。范围不得收窄到 N2/N3——把关型 skill（cm-plugin-doc-syncer/cm-plugin-product-manager/cm-plugin-qa-engineer/cm-plugin-devops-engineer）按设计接在 cm-plugin:ai/N6/N8/cm-plugin:prd/模式文件上，只查派发路径会把它们误报成孤儿（v0.9.24 实跑教训：init 自举时靠人工甄别才排除三处假阳性）。**检查范围限定 `cm-plugin-` 前缀**——上游 cm-workflow 的 `cm-*` 角色（同机共存时存在）与非前缀独立工具（如 codebase-context）都不参与本检查的角色配对（实跑教训：v0.2.2 首次自测按 cm- 扫会把共存的上游角色误报为孤儿），但其被 cm-plugin:init/cm-plugin:prd/N8 的引用仍走第 3 组命令引用检查
 
 ### 2. 命名一致性
 
 - 每个 `skills/*/SKILL.md` 的 frontmatter `name` 必须等于其目录名
 - 每个 `agents/*.md` 的 frontmatter `name` 必须等于其文件名（去 .md）
-- 全部文件中不得残留旧前缀（如 `yd-`、`yd:`）
+- 全部文件中不得残留旧前缀（如 `yd-`、`yd:`、未改名的 `cm:` 命令引用）；**本条规则自身的示例文本不算残留**（实跑教训：v0.2.2 首次自测 grep 命中本文件的示例即误报）
 
 ### 3. 命令间引用有效性
 
