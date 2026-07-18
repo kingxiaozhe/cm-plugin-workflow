@@ -81,6 +81,8 @@ unzip -q ext.zip -d unpacked
 
 ## Step 3: 机会评分卡（输出主体）
 
+**GO 对抗确认（结论为 GO/GO 附条件时强制；WATCH/NO-GO 跳过——错误成本不对称，错误的 GO 烧几十小时开发，错误的 WATCH 只错过机会）**：日志自检通过后、出评分卡前，把评分卡草稿 + 5 条 judgment + 关键证据（槽点原文/停更数据/竞品数据）交 Codex，提示词要义："**假设这个 GO 是错的，找出被忽略的否决因素**——竞品是否被低估？槽点是否真的可修？维护成本是否被轻描淡写？"（句式同 cm-plugin:fix 2.5）。**仅 1 轮**：推翻 → 回对应维度补证；分歧 → 写入评分卡「风险点」交人裁决；通过 → 出卡。凭证 tee 到报告同目录 `scout-{插件名}-verdict-r1.md`，记一行 `judgment`（aspect=`verdict-weight`，detail 注明 Codex 结论）。Codex 未装走 N4 三级降级链。依据：选品 GO 是全流水线最贵的单一决策，此前唯一把关是人拍板，而人审素材全部出自同一模型——与 prd 9.5 补齐前的方案盲区同构。
+
 **出结论前的日志自检卡点**（对齐 N5 凭证对账思路）：回读本次 `.log.jsonl`，确认 ① `dimension_done` ≥3（D1/D2/D3 各一）且 `fetch` ≥1；② `judgment` 覆盖全部 5 个 aspect（cluster/severity/structural/competitor/verdict-weight）——缺维度说明没真跑，缺裁量说明判断没留痕，**任一不齐不得出 verdict**，先补齐（理论上漏跑一个维度、跳过全部裁量记录也能写出通顺的结论，唯一防线是这次对账）。自检结果记一行 `decision` 事件。
 
 ```text
