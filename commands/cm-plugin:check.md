@@ -34,6 +34,7 @@
 - **scout 凭证配对**：cm-plugin:scout 的 GO 对抗确认凭证（`scout-{名}-verdict-r1.md`）↔ 台账中结论为 GO 的行——台账有 GO 而报告目录无 verdict 凭证 → 报告为断链（GO 无对抗凭证 = 单模型自批）
 - **凭证/审批位链路配对**：N4 落盘的 `.reviews/` 凭证 ↔ N5 卡点与 N8 对账所引用的路径一致；cm-plugin:prd 写入的 `.cm-specs-status` ↔ N1 入口闸读取的文件名一致——四处引用两两配对（防单边改名断链）
 - **规则指引与模板配对**：cm-plugin:init「规则内容指引」中的每个条目 ↔ `~/.claude/templates/cm-plugin-rules/{名称}.md` 模板文件一一对应；缺模板报告为降级项（可运行但生成质量不稳定），多出的孤儿模板报告为未接线
+- **流程脚本配对**：命令中引用的每个 `~/.claude/templates/cm-plugin-scripts/{名称}.sh`（preflight/codex/log）↔ 实际脚本文件存在且可执行；缺失报告为降级项（命令会退化为手工执行）。当前引用点：N1 环境预检+Codex 封装、cm-plugin:rewrite R0、cm-plugin:scout 日志助手
 
 ### 5. 外部依赖可用性
 
