@@ -115,6 +115,10 @@ build_pairs() {
   if [ -f "$REPO/templates/arch-reference.md" ]; then
     echo "$REPO/templates/arch-reference.md$TAB$DEST/templates/cm-plugin-arch-reference.md"
   fi
+  if [ -d "$REPO/templates/scripts" ]; then
+    ( cd "$REPO/templates/scripts" && find . -type f ) \
+      | sed "s|^\./\(.*\)$|$REPO/templates/scripts/\1$TAB$DEST/templates/cm-plugin-scripts/\1|"
+  fi
   if [ -d "$REPO/templates/dashboard" ]; then
     ( cd "$REPO/templates/dashboard" && find . -type f ) \
       | sed "s|^\./\(.*\)$|$REPO/templates/dashboard/\1$TAB$DEST/templates/cm-plugin-dashboard/\1|"

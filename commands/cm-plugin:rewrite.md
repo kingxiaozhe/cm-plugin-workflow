@@ -5,12 +5,16 @@
 **定位**：用户**已经决定重写**某个现存插件时的一键主流程——从链接进，到开发完成出。区别于单独的 `/cm-plugin:scout`（评估该不该做）：本命令里评估结论不设门，素材直接向下游流动。
 
 ```text
-链接 → R1 素材采集(scout 素材模式) → R2 UI 原型(huashu-design) → R3 输出 PRD
+R0 环境预检 → R1 素材采集(scout 素材模式) → R2 UI 原型(huashu-design) → R3 输出 PRD
      → R4 拆 specs(/cm-plugin:prd) → R5 开发到底(/cm-plugin:ai N1→N8)
                 【卡点1: 设计方向】      【卡点2: 规格摘要卡】  【既有卡点: 形态确认/合规旗】
 ```
 
 全流程新增的人工卡点只有 1 个（R2 设计方向确认），其余全部复用下游命令的既有闸——不为直通牺牲任何安全卡点，也不重复设闸。
+
+## R0: 环境预检（先于 R1，一次性）
+
+跑 `~/.claude/templates/cm-plugin-scripts/cm-plugin-preflight.sh`——把扩展开发全链路的环境地雷提前引爆（Node/git/Codex/**Chrome for Testing**/系统 Chrome）。有阻塞项先解决：整条流水线到 R5 才用到的 E2E 加载扩展能力，如果现在不查，会在开发到一半时才撞上「系统 Chrome 屏蔽 --load-extension」（实测教训）。提示项不阻塞。
 
 ## R1: 素材采集（scout 素材模式）
 

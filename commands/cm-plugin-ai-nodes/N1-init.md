@@ -20,9 +20,13 @@
 
 > 这是**入口授权门**（人把关方案端），不属于"暂停仅灾难级"约束的中途暂停，也不计入 METRICS 人工介入。实跑教训：没有这道闸，prd 生成完会被一句"继续"顺势带进开发，人审形同虚设。
 
+## 环境预检（先于一切任务，一次性）
+
+开工前跑 `~/.claude/templates/cm-plugin-scripts/cm-plugin-preflight.sh`（存在则用；不存在按下方逐项手查）——它一次性探明扩展开发全链路的环境地雷并给出补救：Node/npm、git、Codex（+调用姿势）、**Chrome for Testing（E2E 真实加载扩展的唯一途径——系统 Chrome 2026 版静默屏蔽 `--load-extension`）**、系统 Chrome。有阻塞项（退出码 1）先解决再开跑。依据：实测最吃时间的不是开发本身,是这些报错什么都不给的环境地雷（`--load-extension` 被屏蔽、codex 缺 `--skip-git-repo-check`、playwright 浏览器下载被墙）。
+
 ## 审查通道预检（Codex 是主通道）
 
-开工前探测 Codex 可用性（`codex --version` 或项目配置的 codex 调用方式），结果直接影响 N4 的审查质量，必须在第一个任务开始前让用户知情：
+开工前探测 Codex 可用性（`codex --version` 或项目配置的 codex 调用方式），结果直接影响 N4 的审查质量，必须在第一个任务开始前让用户知情。**调用封装**：`~/.claude/templates/cm-plugin-scripts/cm-plugin-codex.sh "<提示词>" [凭证路径]` 已收齐正确姿势（`--skip-git-repo-check --sandbox read-only` + 超时 + 输出清洗 + 凭证落盘），N4/prd/scout 的 Codex 调用优先用它，不裸调（实测:裸调常忘 flag、挂起、输出混入源码转储要手工清洗）。
 
 - 可用 → 正常，N4 走双模型交叉审查
 - **不可用 → 明确告知用户**："Codex 未检测到，代码审查将降级为对抗式子代理（质量次优）。建议安装/登录 codex CLI 后回复继续，或回复'接受降级'跑完本次。"——用户接受降级才继续，且本次运行的所有 METRICS 审查列都会带 `降级` 标注。**不得静默降级开跑**

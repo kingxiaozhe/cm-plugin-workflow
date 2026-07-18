@@ -56,6 +56,14 @@ agents/                            # 并行工种的子 agent 定义（安装到
 
 **收编素材**：QA 与 devops 两个 skill 的 `references/` 下的 CWS 检测模式清单、官方违规码表、提审材料清单、CI/CD 模板收编自 [quangpl/browser-extension-skills](https://github.com/quangpl/browser-extension-skills)（MIT），来源与改动见各 skill 目录的 `NOTICE.md`。
 
+## 流程工具脚本（templates/scripts/ → ~/.claude/templates/cm-plugin-scripts/）
+
+把 dogfood 实测中最痛的三个手工环节工具化，命令按需调用（都是有据可查的真实摩擦）：
+
+- **cm-plugin-preflight.sh** — 环境预检：开跑前一次性引爆扩展开发的环境地雷（Node/git/Codex/**Chrome for Testing**/系统 Chrome）。最大的雷是系统 Chrome（2026 版）静默屏蔽 `--load-extension`，E2E 必须用 CfT。N1/R0 调用。
+- **cm-plugin-codex.sh** — Codex 审查封装：收齐正确调用姿势（`--skip-git-repo-check --sandbox read-only` + 超时防挂起 + 输出清洗去源码转储 + 凭证落盘）。N4/prd/scout 的 Codex 调用优先用它，不裸调。
+- **cm-plugin-log.sh** — JSONL 日志助手：自动 ISO8601 时间戳、原子追加、JSON 转义。杜绝手写 echo 的「先记账后落盘」「攒批挤同秒」两类实测错误。
+
 ## 插件领域的三条红线（区别于上游的领域性约束）
 
 1. **manifest 权限只减不增**（agent 层硬约束）——任务范围外的权限新增/扩大必须停下上报

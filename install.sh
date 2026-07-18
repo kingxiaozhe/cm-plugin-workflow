@@ -47,6 +47,12 @@ if [ -f "$SRC_DIR/templates/arch-reference.md" ]; then
   cp "$SRC_DIR/templates/arch-reference.md" "$DEST/templates/cm-plugin-arch-reference.md"
   echo "✓ 架构基准参考表已安装（G1 离线兜底,联网时自动校验刷新）"
 fi
+if [ -d "$SRC_DIR/templates/scripts" ]; then
+  mkdir -p "$DEST/templates/cm-plugin-scripts"
+  cp -R "$SRC_DIR/templates/scripts/." "$DEST/templates/cm-plugin-scripts/"
+  chmod +x "$DEST/templates/cm-plugin-scripts/"*.sh 2>/dev/null || true
+  echo "✓ 流程工具脚本已安装 → $DEST/templates/cm-plugin-scripts/（preflight 环境预检 / codex 审查封装 / log 日志助手）"
+fi
 if [ -d "$SRC_DIR/templates/dashboard" ]; then
   mkdir -p "$DEST/templates/cm-plugin-dashboard"
   cp -R "$SRC_DIR/templates/dashboard/." "$DEST/templates/cm-plugin-dashboard/"
