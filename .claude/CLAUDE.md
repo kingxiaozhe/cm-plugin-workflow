@@ -45,6 +45,7 @@ VERSION                       # 单一版本源，与 cm-plugin:check 基线号�
 - **引用即契约**：本仓库历史缺陷全属「引用断链」——改名残留、匹配表缺项、死角色、失效命令引用。任何跨文件引用都由 `/cm-plugin:check` 机器化校验。
 - **模板层是团队定制入口**：公司规范沉淀进 `templates/rules/`，所有项目 `/cm-plugin:init` 出的 rules 自动带公司基因。
 - **插件领域红线**：manifest 权限最小化（agent 层"权限只减不增"）、商店提审强制人工确认、商店合规检查单只举旗不定性——这三条是本 fork 区别于上游的领域性约束，不得放宽。
+- **命令间隔离（随上游 2026-07-18 确立）**：修改任一 `cm-plugin:` 命令不得动到其他命令的流程文件；命令 A 需要命令 B 的东西,一律做成 A 读 B 的**落盘物**(档案/清单/备忘),不改 B 的文本。rewrite 流水线即此模式:它按序执行下游命令并消费其落盘物(scout 报告/design-baseline/prd.md),不改写任何下游命令文本。唯一豁免:发版时 cm-plugin:check.md 的版本基线行(双写记账,非流程)。
 - **与上游共存**：所有安装产物带 `cm-plugin` 命名（commands 前缀、skills/agents 名、templates/cm-plugin-*、~/.cm-plugin-workflow/）——与上游 cm-workflow 的安装物零交集，改名时必须维持这一点，否则两边自动更新器会互相"自愈"覆盖。
 
 ## 规则
