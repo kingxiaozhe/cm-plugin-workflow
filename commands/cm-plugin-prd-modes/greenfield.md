@@ -62,7 +62,7 @@ Step 3 检测到 `GREENFIELD=true` 时叠加以下规则。核心思想：**架�
 - [ ] T-002: 生成 .claude/ 规范（等同 /cm-plugin:init 产出，基于已选型技术栈，必含 rules/chrome-extension.md） ~15min
 - [ ] T-003: CI 与构建骨架（lint/test/build 流水线 + 打包 zip 产物，环境变量模板） ~30min ——**计划迭代 ≥3 个 feature 的项目不得裁剪本任务**：测试是基建不是环节，第一周省下的半小时会在第五周连本带利还（实测两次 demo 裁剪 + 行业重度实践共同教训）
 - [ ] T-004: 公共底座（消息通信封装、chrome.storage 读写层、错误处理、各表面入口结构） ~30min
-- [ ] T-005: E2E 基座（Playwright/Puppeteer 以 --load-extension 启动真实浏览器加载构建产物，跑通一条"扩展能加载、service worker 能注册"的冒烟用例） ~30min ——扩展的"能跑起来"只能在真实浏览器里验证，这条冒烟是 N6 形态确认卡点的技术前提
+- [ ] T-005: E2E 基座 ~30min ——**直接拷 `~/.claude/templates/cm-plugin-e2e/` 的久经考验底座**（`extension-harness.ts` + `smoke.spec.example.ts`），别自己写 launchPersistentContext/SW 获取（会重踩全套坑：系统 Chrome 屏蔽 --load-extension 须用 Chrome for Testing、SW 注册-停机竞态、headless:false 无头环境退化、SW idle 后 "Worker was closed"、CfT 跨架构路径——harness 里全封装好了）。换掉 `{扩展名}` 等占位后跑通"扩展能加载、SW 注册、popup 可开"。扩展的"能跑起来"只能真实浏览器验证，这条冒烟是 N6 形态确认卡点与 N5 运行观察闸的技术前提
 ```
 
 ### G3: 业务 feature 的生成规则

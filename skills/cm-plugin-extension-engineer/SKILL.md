@@ -79,7 +79,7 @@ npm run typecheck
 npm run build
 ```
 
-**构建产物必须真实加载验证**（扩展的"编译通过"与"能跑"距离极远）：项目有 E2E 基座（Playwright/Puppeteer `--load-extension`）→ 跑冒烟用例；没有 → 至少在本机 Chrome 开发者模式 Load unpacked 一次，确认 manifest 无报错、service worker 注册成功、本任务触碰的表面能打开。加载验证结果写进任务汇报。
+**构建产物必须真实加载验证**（扩展的"编译通过"与"能跑"距离极远，也是 N5 运行观察闸的要求）：项目有 E2E 基座（bootstrap T-005 从 `~/.claude/templates/cm-plugin-e2e/` harness 建的）→ 跑冒烟用例，**读全 passed/failed 计数**；没有 → 至少本机 Chrome 开发者模式 Load unpacked 一次，确认 manifest 无报错、service worker 注册成功、本任务触碰的表面能打开。加载验证结果写进任务汇报。
 
 ## 常见坑
 

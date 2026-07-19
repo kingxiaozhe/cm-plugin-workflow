@@ -18,7 +18,7 @@ description: QA 工程师 Skill，执行功能测试、E2E 测试、可视化回
 自动检测，不做硬编码假设：
 
 - **单元/组件测试**：Vitest / Jest / Mocha（`chrome.*` API 在单测里用 mock 层——检查项目是否已有统一 mock，没有则建一个共享的，禁止每个测试文件各 mock 各的）
-- **E2E 测试（扩展专用姿势）**：Playwright/Puppeteer 以 `launchPersistentContext` + `--load-extension=构建产物` 启动真实 Chromium——扩展 E2E 不能用默认无头模式的远程浏览器；popup 页用 `chrome-extension://{id}/popup.html` 直开，service worker 经 `context.serviceWorkers()` 取到后可 evaluate 断言
+- **E2E 测试（扩展专用姿势）**：**优先用 `~/.claude/templates/cm-plugin-e2e/extension-harness.ts` 封装的底座**（bootstrap T-005 应已拷入 `tests/e2e/`）——它把五个实测坑封装好了：系统 Chrome 屏蔽 `--load-extension`（须 Chrome for Testing）、`--headless=new`（旧 headless 不支持扩展、`headless:false` 无头环境退化）、SW 注册-停机竞态（`acquireServiceWorker` 三路取先到）、`sw.evaluate` 前须 `wakeServiceWorker` 取活引用（否则 "Worker was closed"）、CfT 跨架构路径。**别自己手写 `launchPersistentContext`**，会重踩。popup 用 `chrome-extension://{id}/popup.html` 直开断言。项目无 harness（旧包/非 bootstrap 建）→ 从模板补建
 - **覆盖率工具**：c8 / istanbul
 - 如项目未配置测试框架，根据技术栈推荐并安装（E2E 基座应由 bootstrap T-005 建好，缺失时补建并记 LESSONS）
 
@@ -114,7 +114,9 @@ npx playwright test       # E2E
 | 异步测试超时             | 增加 timeout，检查是否缺少 await       |
 | E2E 测试不稳定（flaky）  | 用 `waitFor` 代替固定延时，重试机制    |
 | 覆盖率统计不准           | 检查 coverage 配置的 include/exclude   |
-| E2E 里扩展没加载         | 无头模式限制——用 `launchPersistentContext` + 新版 headless（`--headless=new`）或有头跑 |
+| E2E 里扩展没加载         | 系统 Chrome 屏蔽 --load-extension → 用 Chrome for Testing + `--headless=new`（harness 已封装） |
+| E2E 时好时坏(flaky)      | 多因 `headless:false` 在无头/CI 退化 或 SW 停机竞态——改用 harness 的 `--headless=new` + `acquireServiceWorker` |
+| sw.evaluate "Worker was closed" | SW 已 idle 停机——用 `wakeServiceWorker(ctx, extId)` 取活引用再 evaluate |
 | service worker 取不到    | 它可能已休眠——先触发一次扩展事件唤醒再 `serviceWorkers()` |
 | chrome.* mock 行为与真实不符 | mock 只兜单测；行为断言以 E2E 真实浏览器为准，两层结论冲突时信 E2E |
 

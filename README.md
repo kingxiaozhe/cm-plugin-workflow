@@ -56,6 +56,17 @@ agents/                            # 并行工种的子 agent 定义（安装到
 
 **收编素材**：QA 与 devops 两个 skill 的 `references/` 下的 CWS 检测模式清单、官方违规码表、提审材料清单、CI/CD 模板收编自 [quangpl/browser-extension-skills](https://github.com/quangpl/browser-extension-skills)（MIT），来源与改动见各 skill 目录的 `NOTICE.md`。
 
+## 扩展 E2E harness 模板（templates/e2e/ → ~/.claude/templates/cm-plugin-e2e/）
+
+MV3 扩展的 Playwright E2E 有一组固定坑，dogfood 实测全踩过一遍，现固化成**可拷贝的久经考验底座**（`extension-harness.ts` + `smoke.spec.example.ts`）。bootstrap T-005 直接拷入，每个新插件不再重踩：
+
+- 系统 Chrome（2026 版）默认屏蔽 `--load-extension` → 须用 **Chrome for Testing**（harness 跨架构自动发现）
+- `--headless=new`（旧 headless 不支持扩展，`headless:false` 在无头/CI 退化 flaky）
+- SW **注册-停机竞态**（`acquireServiceWorker` 三路取先到）
+- `sw.evaluate` 前须 `wakeServiceWorker` 取活引用（否则 `Worker was closed`）
+
+给 N5「运行观察闸」提供了真能用的工具——不只是要求"真跑观察"，还给出怎么跑。
+
 ## 流程工具脚本（templates/scripts/ → ~/.claude/templates/cm-plugin-scripts/）
 
 把 dogfood 实测中最痛的三个手工环节工具化，命令按需调用（都是有据可查的真实摩擦）：

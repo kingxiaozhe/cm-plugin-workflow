@@ -53,6 +53,11 @@ if [ -d "$SRC_DIR/templates/scripts" ]; then
   chmod +x "$DEST/templates/cm-plugin-scripts/"*.sh 2>/dev/null || true
   echo "✓ 流程工具脚本已安装 → $DEST/templates/cm-plugin-scripts/（preflight 环境预检 / codex 审查封装 / log 日志助手）"
 fi
+if [ -d "$SRC_DIR/templates/e2e" ]; then
+  mkdir -p "$DEST/templates/cm-plugin-e2e"
+  cp -R "$SRC_DIR/templates/e2e/." "$DEST/templates/cm-plugin-e2e/"
+  echo "✓ 扩展 E2E harness 模板已安装 → $DEST/templates/cm-plugin-e2e/（bootstrap T-005 拷用,封装 MV3 扩展 E2E 五坑）"
+fi
 if [ -d "$SRC_DIR/templates/dashboard" ]; then
   mkdir -p "$DEST/templates/cm-plugin-dashboard"
   cp -R "$SRC_DIR/templates/dashboard/." "$DEST/templates/cm-plugin-dashboard/"

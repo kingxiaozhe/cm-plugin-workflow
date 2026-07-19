@@ -35,6 +35,7 @@
 - **凭证/审批位链路配对**：N4 落盘的 `.reviews/` 凭证 ↔ N5 卡点与 N8 对账所引用的路径一致；cm-plugin:prd 写入的 `.cm-specs-status` ↔ N1 入口闸读取的文件名一致——四处引用两两配对（防单边改名断链）
 - **规则指引与模板配对**：cm-plugin:init「规则内容指引」中的每个条目 ↔ `~/.claude/templates/cm-plugin-rules/{名称}.md` 模板文件一一对应；缺模板报告为降级项（可运行但生成质量不稳定），多出的孤儿模板报告为未接线
 - **流程脚本配对**：命令中引用的每个 `~/.claude/templates/cm-plugin-scripts/{名称}.sh`（preflight/codex/log）↔ 实际脚本文件存在且可执行；缺失报告为降级项（命令会退化为手工执行）。当前引用点：N1 环境预检+Codex 封装、cm-plugin:rewrite R0、cm-plugin:scout 日志助手
+- **E2E harness 模板配对**：greenfield/skills 引用的 `~/.claude/templates/cm-plugin-e2e/{extension-harness.ts,smoke.spec.example.ts}` 存在；缺失报告为降级项（bootstrap T-005 会退化为 AI 手写 E2E，重踩 MV3 五坑）。引用点：greenfield bootstrap T-005、cm-plugin-qa-engineer/cm-plugin-extension-engineer skill
 
 ### 5. 外部依赖可用性
 
@@ -42,7 +43,7 @@
 - 状态条已配置（settings.json 的 statusLine 指向 cm-plugin-statusline.sh）：未配置报告为提示项（不影响运行，仅少可视化）
 - 自动更新器（`~/.cm-plugin-workflow/cm-update.sh` 存在且 settings.json 的 SessionStart 挂载）：未配置报告为提示项（可选；配置后安装一致性由它每会话机械保障,本命令的版本检查退居兜底）
 - **安装版本**：读取 `~/.claude/templates/cm-plugin-VERSION` 并显示在结论首行。文件缺失 → 显示"版本: 未知（旧版安装，建议用最新包重装）"——版本混乱是实测踩过的坑，反馈问题必带版本号
-- **版本一致性（防混装/旧装）**：本命令文件自带基线号 → **框架版本基线: 0.4.1**（发包时与 VERSION 文件同步递增）。比对规则：
+- **版本一致性（防混装/旧装）**：本命令文件自带基线号 → **框架版本基线: 0.4.2**（发包时与 VERSION 文件同步递增）。比对规则：
   - 基线 = cm-plugin-VERSION → 一致，正常
   - 基线 ≠ cm-plugin-VERSION 或 cm-plugin-VERSION 缺失 → **报"版本不一致/过旧"并建议重装**："命令文件 v{基线} / 安装标记 v{实际}——本机是混装或旧包，请用最新 zip 重跑 install.sh"（实测事故：公司机器旧包 + 家里新包，功能"消失"排查半天）
 
