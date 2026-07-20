@@ -9,7 +9,7 @@
 ```text
 commands/                          # 斜杠命令（安装到 ~/.claude/commands/）
 ├── cm-plugin:rewrite.md           # ★重写直通流水线：链接 → 素材采集 → huashu-design 原型 → PRD → 拆specs → 开发到底
-├── cm-plugin:scout.md             # 竞品插件重写机会评估（评论槽点/停更信号/源码功能盘点 → 机会评分卡；支持 --rewrite 素材模式）
+├── cm-plugin:scout.md             # 竞品插件重写机会评估（评论槽点/停更信号/源码功能盘点 → 机会评分卡；支持 --rewrite 素材模式、--bakeoff 多候选对抗模式）
 ├── cm-plugin:init.md              # 项目 .claude/ 初始化（CLAUDE.md + rules/，识别扩展脚手架与权限清单）
 ├── cm-plugin:prd.md               # 需求文档 → specs 三件套（requirements/design/tasks），支持 --change 变更模式
 ├── cm-plugin:ai.md                # 自动开发主循环（流程图状态机）
@@ -161,6 +161,8 @@ templates/pixel/serve.sh {specs路径}   # 浏览器版（16-bit 风格，办公
 **选品（还没决定做不做时的第 0 步）：**
 
 `/cm-plugin:scout {商店链接}`——三维评估现存插件值不值得重写：**评论区槽点**（低分评论聚类 = 重写的原始需求，高分评论 = 不能丢的核心体验）、**停更信号**（>6 个月未更新是最强机会信号）、**源码功能盘点**（只盘功能不抄代码，清白室红线）。产出机会评分卡（GO/WATCH/NO-GO 由人拍板）+ 槽点→需求映射表 + 全程 `.log.jsonl` 运行日志（与 /cm-plugin:ai 同规格，可审计）；多次选品由 `SCOUTS.md` 台账串联，WATCH 项带复查到期提醒。GO 后报告直接作为 /cm-plugin:prd 的需求文档。
+
+**还没定靶时**：`/cm-plugin:scout --bakeoff {方向提示}`——多候选对抗比对模式：按判据（纯客户端/现任弃养或劣化/空档没被干净替代填满/非红海）凑齐 3-5 个候选做轻量核验 → 交 Codex **证否式对抗**（默认都不值得重写，证据压倒才翻）→ 逼出**一个确定靶**（或"全部不达标，继续搜"，无 GO 是合法结论不硬凑），选出的靶再走完整三维。挡住"单点押注把 WATCH 美化成 GO"（dogfood 实跑教训）。
 
 **存量插件项目：**
 
