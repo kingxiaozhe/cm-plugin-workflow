@@ -89,12 +89,15 @@ MV3 扩展的 Playwright E2E 有一组固定坑，dogfood 实测全踩过一遍�
 仓库访问权限的用户才能通过 BYZ/Pi 的 Git package 通道安装：
 
 ```bash
-byz install git:git@github.com:kingxiaozhe/cm-plugin-workflow@main
+export BYZ_CM_PLUGIN_WORKFLOW_SOURCE='git:git@github.com:kingxiaozhe/cm-plugin-workflow@<40-character-commit-sha>'
+byz workflow install cm-plugin
 ```
 
-该方式把 package 交给 BYZ 自己的 `.byz` 配置与包管理器，不会复制到 Codex 或
+提交号必须是完整的 40 位 SHA。该方式把 package 交给 BYZ 自己的 `.byz` 配置与
+包管理器，并把 Pi package autoload 设为关闭；只有显式运行
+`byz --workflow cm-plugin` 时，BYZ 才会注入本工作流。它不会复制到 Codex 或
 Claude Code 全局目录，也不会运行本仓库的 legacy installer、hook 或自动更新器。
-公开 BYZ 发行物不包含本私有仓库源码。
+公开 BYZ 发行物不包含本私有仓库源码、仓库地址或提交号。
 
 ### Codex / Claude Code legacy installer
 
