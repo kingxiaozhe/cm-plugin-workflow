@@ -83,6 +83,21 @@ MV3 扩展的 Playwright E2E 有一组固定坑，dogfood 实测全踩过一遍�
 
 ## 安装
 
+### Pi / BYZ 私有 package
+
+仓库包含原生 Pi package manifest，但保持私有且标记为 `UNLICENSED`。只有拥有
+仓库访问权限的用户才能通过 BYZ/Pi 的 Git package 通道安装：
+
+```bash
+byz install git:git@github.com:kingxiaozhe/cm-plugin-workflow@main
+```
+
+该方式把 package 交给 BYZ 自己的 `.byz` 配置与包管理器，不会复制到 Codex 或
+Claude Code 全局目录，也不会运行本仓库的 legacy installer、hook 或自动更新器。
+公开 BYZ 发行物不包含本私有仓库源码。
+
+### Codex / Claude Code legacy installer
+
 ```bash
 ./install.sh          # macOS/Linux 一键安装（含覆盖确认），装完自动提示运行 /cm-plugin:check
 ```
