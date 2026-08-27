@@ -4,6 +4,10 @@
 
 基于 [cm-workflow](https://github.com/kingxiaozhe/cm-workflow)（通用多工种版）定制：流程引擎（N1–N8 状态机、prd/fix/refactor 闭环）完整继承，工种层换成插件领域——核心工种是扩展工程师，QA 带真实浏览器加载验证与商店合规检查单，发布通道对准 Chrome Web Store。前缀 `cm-plugin:`，与上游 `cm:` 可同机共存（安装产物零交集）。
 
+## BYZ 集成
+
+BYZ 按完整 Git 提交锁定并内置本工作流。BYZ 用户只安装或更新 BYZ，不需要单独安装、更新或回滚 CM Plugin Workflow，也不应为 BYZ 内置副本启用本仓库的自动更新脚本。
+
 ## 目录结构
 
 ```text
@@ -83,21 +87,11 @@ MV3 扩展的 Playwright E2E 有一组固定坑，dogfood 实测全踩过一遍�
 
 ## 安装
 
-### Pi / BYZ 私有 package
+### Pi / BYZ 内置 package
 
-仓库包含原生 Pi package manifest，但保持私有且标记为 `UNLICENSED`。只有拥有
-仓库访问权限的用户才能通过 BYZ/Pi 的 Git package 通道安装：
-
-```bash
-export BYZ_CM_PLUGIN_WORKFLOW_SOURCE='git:git@github.com:kingxiaozhe/cm-plugin-workflow@<40-character-commit-sha>'
-byz workflow install cm-plugin
-```
-
-提交号必须是完整的 40 位 SHA。该方式把 package 交给 BYZ 自己的 `.byz` 配置与
-包管理器，并把 Pi package autoload 设为关闭；只有显式运行
-`byz --workflow cm-plugin` 时，BYZ 才会注入本工作流。它不会复制到 Codex 或
-Claude Code 全局目录，也不会运行本仓库的 legacy installer、hook 或自动更新器。
-公开 BYZ 发行物不包含本私有仓库源码、仓库地址或提交号。
+BYZ 按完整 Git 提交锁定并内置本工作流。用户安装 BYZ 后可直接运行
+`byz --workflow cm-plugin`，不需要设置私有源，也不需要执行独立的工作流安装、
+更新或回滚命令。BYZ 内置副本只随 BYZ 版本更新。
 
 ### Codex / Claude Code legacy installer
 

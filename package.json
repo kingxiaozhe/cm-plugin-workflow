@@ -1,35 +1,33 @@
 {
-  "name": "@aibyzero/cm-plugin-workflow",
-  "version": "0.5.0",
-  "description": "Private Chrome MV3 development workflow package for Pi and BYZ",
-  "private": true,
-  "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/kingxiaozhe/cm-plugin-workflow.git"
-  },
-  "keywords": [
-    "pi-package",
-    "coding-agent",
-    "chrome-extension",
-    "workflow",
-    "skills"
-  ],
-  "files": [
-    "VERSION",
-    "README.md",
-    "agents",
-    "commands",
-    "docs",
-    "skills",
-    "templates"
-  ],
-  "pi": {
-    "skills": [
-      "./skills"
-    ],
-    "prompts": [
-      "./commands"
-    ]
-  }
+	"name": "@aibyzero/cm-plugin-workflow",
+	"version": "0.5.0",
+	"description": "Spec-driven workflow for Chrome extension development",
+	"private": true,
+	"type": "module",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kingxiaozhe/cm-plugin-workflow.git"
+	},
+	"keywords": [
+		"pi-package",
+		"coding-agent",
+		"chrome-extension",
+		"workflow",
+		"skills"
+	],
+	"files": [
+		"VERSION",
+		"README.md",
+		"LICENSE",
+		"agents",
+		"commands",
+		"docs",
+		"skills",
+		"templates"
+	],
+	"pi": {
+		"skills": ["./skills"],
+		"prompts": ["./commands"]
+	}
 }
