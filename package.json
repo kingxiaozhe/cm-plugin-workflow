@@ -1,0 +1,29 @@
+{
+	"name": "@aibyzero/cm-plugin-workflow",
+	"version": "0.5.0",
+	"description": "Spec-driven workflow for Chrome extension development",
+	"private": true,
+	"type": "module",
+	"files": [
+		"agents",
+		"commands",
+		"docs",
+		"skills",
+		"templates",
+		"LICENSE",
+		"README.md",
+		"VERSION",
+		"cm-update.sh",
+		"install.ps1",
+		"install.sh"
+	],
+	"pi": {
+		"skills": ["skills"],
+		"prompts": ["commands"]
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kingxiaozhe/cm-plugin-workflow.git"
+	}
+}

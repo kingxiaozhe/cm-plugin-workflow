@@ -4,6 +4,10 @@
 
 基于 [cm-workflow](https://github.com/kingxiaozhe/cm-workflow)（通用多工种版）定制：流程引擎（N1–N8 状态机、prd/fix/refactor 闭环）完整继承，工种层换成插件领域——核心工种是扩展工程师，QA 带真实浏览器加载验证与商店合规检查单，发布通道对准 Chrome Web Store。前缀 `cm-plugin:`，与上游 `cm:` 可同机共存（安装产物零交集）。
 
+## BYZ 集成
+
+BYZ 按完整 Git 提交锁定并内置本工作流。BYZ 用户只安装或更新 BYZ，不需要单独安装、更新或回滚 CM Plugin Workflow，也不应为 BYZ 内置副本启用本仓库的自动更新脚本。
+
 ## 目录结构
 
 ```text
